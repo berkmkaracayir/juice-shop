@@ -5,10 +5,12 @@ on:
     branches: 
       - master
   pull_request:
+    branches:
+      - master
 
 jobs:
   build-and-syft:
-    name: Build & SBOM
+    name: Build & SBOM + Semgrep
     runs-on: ubuntu-latest
     steps:
       - name: Checkout 
@@ -31,7 +33,11 @@ jobs:
           name: sbom
           path: sbom.spdx.json
 
+      - name: Install Semgrep
+        run: |
+          curl -sSfL https://semgrep.dev/install | sh
+
       - name: Run Semgrep
-        uses: returntocorp/semgrep-action@v2
-        with:
-          config: "p/ci"
+        run: |
+          semgrep --config=auto juice-shop
+
