@@ -37,7 +37,7 @@ jobs:
           sarif_file: 'semgrep/result/semgrep.sarif'
 
       - name: Upload Semgrep report
-        uses: action/upload-artifact@v4
+        uses: actions/upload-artifact@v4
         if: always()
         with:
           name: semgrep-results
