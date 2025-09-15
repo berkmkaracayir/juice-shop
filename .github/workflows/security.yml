@@ -25,11 +25,8 @@ jobs:
           output-file: "sbom.spdx.json"
           format: "spdx-json"
 
-  semgrep:
-    runs-on: ubuntu-latest
-    container:
-      image: semgrep/semgrep
-    steps:
-    - uses: actions/checkout@v4
-    - run: semgrep scan --config auto
+      - name: Semgrep Scan
+        uses: returntocorp/semgrep-action@v3
+        with:
+          config: "auto"
 
