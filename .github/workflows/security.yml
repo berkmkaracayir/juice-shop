@@ -25,17 +25,11 @@ jobs:
           output-file: "sbom.spdx.json"
           format: "spdx-json"
 
-      - name: Upload SBOM
-        uses: actions/upload-artifact@v4
-        with:
-          name: sbom
-          path: sbom.spdx.json
-
-      - name: Install Semgrep
-        run: |
-          curl -sSfL https://semgrep.dev/install | bash
-
-      - name: Run Semgrep
-        run: |
-          semgrep --config=auto juice-shop
+  semgrep:
+    runs-on: ubuntu-latest
+    container:
+      image: semgrep/semgrep
+    steps:
+    - uses: actions/checkout@v4
+    - run: semgrep scan --config auto
 
