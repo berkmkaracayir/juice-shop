@@ -33,7 +33,7 @@ jobs:
 
       - name: Install Semgrep
         run: |
-          curl -sSfL https://semgrep.dev/install | sh
+          curl -sSfL https://semgrep.dev/install | bash
 
       - name: Run Semgrep
         run: |
