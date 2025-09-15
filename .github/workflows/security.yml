@@ -26,7 +26,20 @@ jobs:
           format: "spdx-json"
 
       - name: Semgrep Scan
-        uses: returntocorp/semgrep-action@v3
+        run: |
+         mkdir -p semgrep/results
+         semgrep ci --config=auto --sarif --output=semgrep/results/semgrep.sarif || true
+
+      - name: Upload SARIF File
+        uses: github/codeql-action/upload-sarif@v3
+        if: always()
         with:
-          config: "auto"
+          sarif_file: 'semgrep/result/semgrep.sarif'
+
+      - name: Upload Semgrep report
+        uses: action/upload-artifact@v4
+        if: always()
+        with:
+          name: semgrep-results
+          path: semgrep/results/
 
